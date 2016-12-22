@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Launcher</string>
+    <string name="desc"/>
+    <string name="app_manager">应用管理</string>
+    <string name="save">保存</string>
+    <string name="app_hide">隐藏应用</string>
+    <string name="app_show">应用显示</string>
+    <string name="input_pwd">输入密码</string>
+    <string name="please_input_pwd">请输入密码</string>
+    <string name="modify_pwd">修改密码</string>
+    <string name="pwd_error">密码输入错误</string>
+    <string name="modify_success">密码修改成功</string>
+    <string name="please_input_pwd_new">请输入新密码</string>
+    <string name="app_error">应用程序加载异常</string>
+</resources>
