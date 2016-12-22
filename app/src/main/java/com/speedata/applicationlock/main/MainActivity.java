@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
+import com.speedata.applicationlock.bean.InstallBroadcast;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
@@ -59,16 +60,16 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
-        loadApps();
         initView();
+        loadApps();
     }
 
     private void loadApps() {
         Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
         mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> mAllAppList = getPackageManager().queryIntentActivities(mIntent, 0);
-        mAppShowList = new ArrayList<>();
         mAppShowList.addAll(ToolsCommon.getMainShowList(mAllAppList));
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initView() {
@@ -78,6 +79,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         mRvContent.setLayoutManager(new GridLayoutManager(this, 4));
 //        mRvContent.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
 //        mRvContent.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.HORIZONTAL));
+        mAppShowList = new ArrayList<>();
         mAdapter = new AppsAdapter(this, R.layout.view_all_app_item_layout, mAppShowList);
         mRvContent.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -113,6 +115,14 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         mAppShowList.clear();
         mAppShowList.addAll(appShowList);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getInstallApp(InstallBroadcast installBroadcast) {
+        if (installBroadcast.isChanged()) {
+            mAppShowList.clear();
+            loadApps();
+        }
     }
 
     @Override

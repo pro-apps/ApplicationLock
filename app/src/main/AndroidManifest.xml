@@ -38,6 +38,18 @@
             android:name=".show.ShowActivity"
             >
         </activity>
+
+        <receiver android:name=".base.PackageChangedReceiver">
+            <intent-filter>
+                <!--<action android:name="android.intent.action.PACKAGE_CHANGED"/>-->
+                <!--<action android:name="android.intent.action.PACKAGE_REPLACED"/>-->
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
