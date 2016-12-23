@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,9 +16,6 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.App;
 import com.speedata.applicationlock.hide.HideActivity;
 import com.speedata.applicationlock.show.ShowActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ----------Dragon be here!----------/
@@ -71,7 +66,7 @@ public class ToolToast {
      * @param context 上下文
      * @param viewId  自定义布局View
      */
-    public static Dialog showPwdDialog(final Context context, int viewId, final boolean isShow, final List<ResolveInfo> mAppShowList) {
+    public static Dialog showPwdDialog(final Context context, int viewId, final boolean isShow) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View mView = LayoutInflater.from(context).inflate(viewId, null);
         builder.setView(mView);
@@ -102,9 +97,7 @@ public class ToolToast {
                 } else {
                     if (mPwd.getText().toString().equals(SPUtils.get(context, "pwd", "1234", "pwd_file"))) {
                         if (isShow)
-                            context.startActivity(new Intent(context, HideActivity.class)
-                                    .putParcelableArrayListExtra("appList",
-                                            (ArrayList<? extends Parcelable>) mAppShowList));
+                            context.startActivity(new Intent(context, HideActivity.class));
                         else
                             context.startActivity(new Intent(context, ShowActivity.class));
                         dialog.dismiss();

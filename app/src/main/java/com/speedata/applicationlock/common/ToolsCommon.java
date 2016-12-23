@@ -3,10 +3,13 @@ package com.speedata.applicationlock.common;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.R;
+import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppsBean;
 import com.speedata.applicationlock.bean.HideAppBean;
 import com.speedata.applicationlock.common.utils.ToolToast;
@@ -47,21 +50,21 @@ public class ToolsCommon {
      * @param position 点击位置
      * @param context  上下文
      */
-    public static void startApp(List<ResolveInfo> mAppList, int position, Context context) {
-        try{
-            ResolveInfo info = mAppList.get(position);
-            String pkg = info.activityInfo.packageName;
-            String cls = info.activityInfo.name;
+    public static void startApp(List<AppInfo> mAppList, int position, Context context) {
+        try {
+            AppInfo info = mAppList.get(position);
+            String pkg = info.getAppPkg();
+            String cls = info.getActName();
             ComponentName mComponentName = new ComponentName(pkg, cls);
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setComponent(mComponentName);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent); 
-        }catch (Exception e){
+            context.startActivity(intent);
+        } catch (Exception e) {
             ToolToast.toastShort(context.getString(R.string.app_error));
         }
-        
+
     }
 
     /**
@@ -172,5 +175,23 @@ public class ToolsCommon {
             }
         }
         return mAppList;
+    }
+
+    /**
+     * 获取app图标
+     *
+     * @param context context
+     * @param pkgName pkgName
+     * @param actName actName
+     * @return icon
+     */
+    public static Drawable getAppIcon(Context context, String pkgName, String actName) {
+        ComponentName mComponentName = new ComponentName(pkgName, actName);
+        try {
+            return context.getPackageManager().getActivityIcon(mComponentName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
