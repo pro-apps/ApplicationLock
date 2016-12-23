@@ -15,6 +15,7 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.InstallBroadcast;
+import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
@@ -53,7 +54,7 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  */
 public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener {
 
-    private List<AppInfo> mAllShowList;
+    private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
 
     @Override
@@ -68,12 +69,13 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     private void loadApps() {
         Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
         mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> mAllAppList = getPackageManager().queryIntentActivities(mIntent, 0);
+        List<ResolveInfo> mAppList = getPackageManager().queryIntentActivities(mIntent, 0);
         for (int i = 0; i < mAllAppList.size(); i++) {
-            mAllShowList.add(new AppInfo(mAllAppList.get(i).activityInfo.name,
-                    mAllAppList.get(i).activityInfo.packageName,
-                    mAllAppList.get(i).activityInfo.loadLabel(getPackageManager()).toString(), false));
+            mAllAppList.add(new AppInfo(mAppList.get(i).activityInfo.name,
+                    mAppList.get(i).activityInfo.packageName,
+                    mAppList.get(i).activityInfo.loadLabel(getPackageManager()).toString(), false));
         }
+        DbCommon.saveAppList(mAllAppList);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -82,15 +84,15 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         setSupportActionBar(toolbar);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new GridLayoutManager(this, 4));
-        mAllShowList = new ArrayList<>();
-        mAdapter = new AppsAdapter(this, R.layout.view_all_app_item_layout, mAllShowList);
+        mAllAppList = new ArrayList<>();
+        mAdapter = new AppsAdapter(this, R.layout.view_all_app_item_layout, mAllAppList);
         mRvContent.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
-        ToolsCommon.startApp(mAllShowList, position, this);
+        ToolsCommon.startApp(mAllAppList, position, this);
     }
 
     @Override
@@ -115,15 +117,15 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getShowAppList(List<AppInfo> appShowList) {
-        mAllShowList.clear();
-        mAllShowList.addAll(appShowList);
+        mAllAppList.clear();
+        mAllAppList.addAll(appShowList);
         mAdapter.notifyDataSetChanged();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getInstallApp(InstallBroadcast installBroadcast) {
         if (installBroadcast.isChanged()) {
-            mAllShowList.clear();
+            mAllAppList.clear();
             loadApps();
         }
     }

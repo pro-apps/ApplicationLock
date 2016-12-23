@@ -11,7 +11,6 @@ import android.widget.Button;
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
 import com.speedata.applicationlock.bean.AppsBean;
-import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,7 +75,6 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.btn_save:
                 EventBus.getDefault().post(ToolsCommon.getShowAppList(mAppsList));
-                DbCommon.saveDb(mAppsList);
                 finish();
                 break;
         }
