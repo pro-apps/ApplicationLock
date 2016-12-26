@@ -72,8 +72,8 @@ public class ShowActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_save:
-                DbCommon.saveAppList(mCanShowAppList);
                 EventBus.getDefault().post(new AppChanged(true));
+                DbCommon.updateAppList(mCanShowAppList);
                 finish();
                 break;
         }

@@ -48,6 +48,7 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
 
     private HideAppAdapter mAdapter;
     private List<AppInfo> mCanHideAppList;
+    private List<AppInfo> mCanShowAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
     private void initView() {
         mCanHideAppList = new ArrayList<>();
         mCanHideAppList.addAll(DbCommon.queryAppList(false));
+        mCanShowAppList = new ArrayList<>();
+        mCanShowAppList.addAll(DbCommon.queryAppList(true));
         mAdapter = new HideAppAdapter(this, R.layout.view_hide_app_item_layout, mCanHideAppList);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
@@ -73,11 +76,16 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save:
-                DbCommon.saveAppList(mCanHideAppList);
-                EventBus.getDefault().post(new AppChanged(true));
+                save();
                 finish();
                 break;
         }
+    }
+
+    private void save() {
+        mCanHideAppList.addAll(mCanShowAppList);
+        DbCommon.updateAppList(mCanHideAppList);
+        EventBus.getDefault().post(new AppChanged(true));
     }
 
 
@@ -85,5 +93,10 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
         mCanHideAppList.get(position).setHide(!mCanHideAppList.get(position).isHide());
         mAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

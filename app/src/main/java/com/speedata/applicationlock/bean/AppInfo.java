@@ -35,8 +35,7 @@ import com.speedata.applicationlock.common.db.HideAppDB;
  */
 @Table(database = HideAppDB.class)
 public class AppInfo extends BaseModel implements Parcelable {
-    @PrimaryKey(autoincrement = true)
-    Long id;
+    @PrimaryKey
     @Column
     private String actName;
     @Column
