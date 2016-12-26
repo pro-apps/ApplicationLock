@@ -9,9 +9,9 @@ import android.widget.Button;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
-import com.speedata.applicationlock.bean.AppsBean;
+import com.speedata.applicationlock.bean.AppChanged;
+import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
-import com.speedata.applicationlock.common.ToolsCommon;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,8 +45,8 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  *         Description:显示应用
  */
 public class ShowActivity extends BaseActivity implements View.OnClickListener, CommonRvAdapter.OnItemClickListener {
-    private List<AppsBean> mAppsList;
     private ShowAppAdapter mAdapter;
+    private List<AppInfo> mCanShowAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,9 @@ public class ShowActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initView() {
-        mAppsList = new ArrayList<>();
-        mAppsList.addAll(ToolsCommon.getShowList(this));
-        mAdapter = new ShowAppAdapter(this, R.layout.view_hide_app_item_layout, mAppsList);
+        mCanShowAppList = new ArrayList<>();
+        mCanShowAppList.addAll(DbCommon.queryAppList(true));
+        mAdapter = new ShowAppAdapter(this, R.layout.view_hide_app_item_layout, mCanShowAppList);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -72,8 +72,8 @@ public class ShowActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_save:
-                EventBus.getDefault().post(ToolsCommon.getShowAppList(mAppsList, this));
-                DbCommon.updateDb(mAppsList);
+                DbCommon.saveAppList(mCanShowAppList);
+                EventBus.getDefault().post(new AppChanged(true));
                 finish();
                 break;
         }
@@ -82,7 +82,7 @@ public class ShowActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
-        mAppsList.get(position).setCheck(!mAppsList.get(position).isCheck());
+        mCanShowAppList.get(position).setHide(!mCanShowAppList.get(position).isHide());
         mAdapter.notifyDataSetChanged();
     }
 }
