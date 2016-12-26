@@ -24,7 +24,7 @@ package com.speedata.applicationlock.bean;
  * @author Reginer on  2016/12/22 16:49.
  *         Description:安装卸载接收
  */
-public class InstallBroadcast {
+public class AppChanged {
 
     private boolean isChanged;
 
@@ -36,7 +36,7 @@ public class InstallBroadcast {
         isChanged = changed;
     }
 
-    public InstallBroadcast(boolean isChanged) {
+    public AppChanged(boolean isChanged) {
         this.isChanged = isChanged;
     }
 }

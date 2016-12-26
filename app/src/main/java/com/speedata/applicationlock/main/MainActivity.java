@@ -13,8 +13,8 @@ import android.view.View;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
+import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
-import com.speedata.applicationlock.bean.InstallBroadcast;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.utils.ToolToast;
@@ -67,16 +67,17 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     }
 
     private void loadApps() {
+
         Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
         mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> mAppList = getPackageManager().queryIntentActivities(mIntent, 0);
-        for (int i = 0; i < mAllAppList.size(); i++) {
+        for (int i = 0; i < mAppList.size(); i++) {
             mAllAppList.add(new AppInfo(mAppList.get(i).activityInfo.name,
                     mAppList.get(i).activityInfo.packageName,
                     mAppList.get(i).activityInfo.loadLabel(getPackageManager()).toString(), false));
         }
-        DbCommon.saveAppList(mAllAppList);
         mAdapter.notifyDataSetChanged();
+        DbCommon.saveAppList(mAllAppList);
     }
 
     private void initView() {
@@ -115,16 +116,11 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         return super.onOptionsItemSelected(item);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getShowAppList(List<AppInfo> appShowList) {
-        mAllAppList.clear();
-        mAllAppList.addAll(appShowList);
-        mAdapter.notifyDataSetChanged();
-    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getInstallApp(InstallBroadcast installBroadcast) {
-        if (installBroadcast.isChanged()) {
+    public void getAppChanged(AppChanged appChanged) {
+        if (appChanged.isChanged()) {
             mAllAppList.clear();
             loadApps();
         }

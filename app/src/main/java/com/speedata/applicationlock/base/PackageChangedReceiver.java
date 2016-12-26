@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.speedata.applicationlock.bean.InstallBroadcast;
+import com.speedata.applicationlock.bean.AppChanged;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,6 +35,6 @@ import org.greenrobot.eventbus.EventBus;
 public class PackageChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        EventBus.getDefault().post(new InstallBroadcast(true));
+        EventBus.getDefault().post(new AppChanged(true));
     }
 }

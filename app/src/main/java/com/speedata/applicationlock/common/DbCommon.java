@@ -59,10 +59,10 @@ public class DbCommon {
      *
      * @return 可隐藏列表
      */
-    public List<AppInfo> queryAppList() {
+    public static List<AppInfo> queryAppList(boolean isHide) {
         return SQLite.select().
                 from(AppInfo.class).
-                where(AppInfo_Table.isHide.is(true)).
+                where(AppInfo_Table.isHide.is(isHide)).
                 queryList();
     }
 

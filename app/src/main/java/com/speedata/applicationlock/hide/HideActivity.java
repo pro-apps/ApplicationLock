@@ -1,6 +1,5 @@
 package com.speedata.applicationlock.hide;
 
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,9 @@ import android.widget.Button;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
-import com.speedata.applicationlock.bean.AppsBean;
-import com.speedata.applicationlock.common.ToolsCommon;
+import com.speedata.applicationlock.bean.AppChanged;
+import com.speedata.applicationlock.bean.AppInfo;
+import com.speedata.applicationlock.common.DbCommon;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,8 +46,8 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  */
 public class HideActivity extends BaseActivity implements View.OnClickListener, CommonRvAdapter.OnItemClickListener {
 
-    private List<AppsBean> mAppsList;
     private HideAppAdapter mAdapter;
+    private List<AppInfo> mCanHideAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +57,9 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initView() {
-        List<ResolveInfo> mAppList = getIntent().getParcelableArrayListExtra("appList");
-        mAppsList = new ArrayList<>();
-        mAppsList.addAll(ToolsCommon.getAppsList(mAppList));
-        mAdapter = new HideAppAdapter(this, R.layout.view_hide_app_item_layout, mAppsList);
+        mCanHideAppList = new ArrayList<>();
+        mCanHideAppList.addAll(DbCommon.queryAppList(false));
+        mAdapter = new HideAppAdapter(this, R.layout.view_hide_app_item_layout, mCanHideAppList);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -74,7 +73,8 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save:
-                EventBus.getDefault().post(ToolsCommon.getShowAppList(mAppsList));
+                DbCommon.saveAppList(mCanHideAppList);
+                EventBus.getDefault().post(new AppChanged(true));
                 finish();
                 break;
         }
@@ -83,7 +83,7 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
-        mAppsList.get(position).setCheck(!mAppsList.get(position).isCheck());
+        mCanHideAppList.get(position).setHide(!mCanHideAppList.get(position).isHide());
         mAdapter.notifyItemChanged(position);
     }
 }
