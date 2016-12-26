@@ -1,8 +1,5 @@
 package com.speedata.applicationlock.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -34,7 +31,7 @@ import com.speedata.applicationlock.common.db.HideAppDB;
  *         Description:
  */
 @Table(database = HideAppDB.class)
-public class AppInfo extends BaseModel implements Parcelable {
+public class AppInfo extends BaseModel {
     @PrimaryKey
     @Column
     private String actName;
@@ -45,8 +42,10 @@ public class AppInfo extends BaseModel implements Parcelable {
     @Column
     private boolean isHide;
 
+    public AppInfo() {
+    }
 
-    public AppInfo(String actName,String appPkg,String appLabel,boolean isHide){
+    public AppInfo(String actName, String appPkg, String appLabel, boolean isHide) {
         this.actName = actName;
         this.appPkg = appPkg;
         this.appLabel = appLabel;
@@ -86,38 +85,4 @@ public class AppInfo extends BaseModel implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.actName);
-        dest.writeString(this.appPkg);
-        dest.writeString(this.appLabel);
-        dest.writeByte(this.isHide ? (byte) 1 : (byte) 0);
-    }
-
-    public AppInfo() {
-    }
-
-    protected AppInfo(Parcel in) {
-        this.actName = in.readString();
-        this.appPkg = in.readString();
-        this.appLabel = in.readString();
-        this.isHide = in.readByte() != 0;
-    }
-
-    public static final Parcelable.Creator<AppInfo> CREATOR = new Parcelable.Creator<AppInfo>() {
-        @Override
-        public AppInfo createFromParcel(Parcel source) {
-            return new AppInfo(source);
-        }
-
-        @Override
-        public AppInfo[] newArray(int size) {
-            return new AppInfo[size];
-        }
-    };
 }

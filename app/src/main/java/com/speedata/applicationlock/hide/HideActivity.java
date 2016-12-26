@@ -9,11 +9,8 @@ import android.widget.Button;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
-import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,17 +74,16 @@ public class HideActivity extends BaseActivity implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.btn_save:
                 save();
-                finish();
                 break;
         }
     }
 
     private void save() {
         mCanHideAppList.addAll(mCanShowAppList);
-        DbCommon.updateAppList(mCanHideAppList);
-        EventBus.getDefault().post(new AppChanged(true));
+        DbCommon.saveAppList(mCanHideAppList);
+//        EventBus.getDefault().post(new AppChanged(true));
+        finish();
     }
-
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {

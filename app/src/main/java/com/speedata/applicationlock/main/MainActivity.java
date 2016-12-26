@@ -120,10 +120,10 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
-        if (appChanged.isChanged()) {
-            mAllAppList.clear();
-            loadApps();
-        }
+//        if (appChanged.isChanged()) {
+//            mAllAppList.clear();
+//            loadApps();
+//        }
     }
 
     @Override

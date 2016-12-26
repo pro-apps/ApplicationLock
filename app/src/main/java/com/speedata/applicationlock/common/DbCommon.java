@@ -60,18 +60,6 @@ public class DbCommon {
 
     }
 
-    /**
-     * 升级应用列表
-     *
-     * @param mAppList app列表
-     */
-    public static void updateAppList(List<AppInfo> mAppList) {
-        FlowManager.getDatabase(HideAppDB.class)
-                .getTransactionManager()
-                .getSaveQueue()
-                .addAll2(mAppList);
-        FlowManager.getDatabase(HideAppDB.class).getTransactionManager().getSaveQueue().purgeQueue();
-    }
 
 
 }
