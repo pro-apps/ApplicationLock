@@ -1,7 +1,5 @@
 package com.speedata.applicationlock.main;
 
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,17 +65,13 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     }
 
     private void loadApps() {
-
-        Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
-        mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> mAppList = getPackageManager().queryIntentActivities(mIntent, 0);
-        for (int i = 0; i < mAppList.size(); i++) {
-            mAllAppList.add(new AppInfo(mAppList.get(i).activityInfo.name,
-                    mAppList.get(i).activityInfo.packageName,
-                    mAppList.get(i).activityInfo.loadLabel(getPackageManager()).toString(), false));
-        }
+        if (DbCommon.queryAppList(false).isEmpty()) {
+            mAllAppList.addAll(ToolsCommon.getAllAppList(this));
+            DbCommon.saveAppList(mAllAppList);
+        } else
+            mAllAppList.addAll(DbCommon.queryAppList(false));
         mAdapter.notifyDataSetChanged();
-        DbCommon.saveAppList(mAllAppList);
+
     }
 
     private void initView() {
@@ -117,13 +111,13 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     }
 
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
-//        if (appChanged.isChanged()) {
-//            mAllAppList.clear();
-//            loadApps();
-//        }
+        if (appChanged.isChanged()) {
+            mAllAppList.clear();
+            mAllAppList.addAll(DbCommon.queryAppList(false));
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

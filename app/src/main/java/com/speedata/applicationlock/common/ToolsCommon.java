@@ -4,12 +4,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,5 +80,25 @@ public class ToolsCommon {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取app列表
+     *
+     * @param context 上下文
+     * @return 安装app列表
+     */
+    public static List<AppInfo> getAllAppList(Context context) {
+        List<AppInfo> mAllAppList = new ArrayList<>();
+        Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
+        mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> mAppList = context.getPackageManager().queryIntentActivities(mIntent, 0);
+        for (int i = 0; i < mAppList.size(); i++) {
+            mAllAppList.add(new AppInfo(mAppList.get(i).activityInfo.name,
+                    mAppList.get(i).activityInfo.packageName,
+                    mAppList.get(i).activityInfo.loadLabel(context.getPackageManager()).toString(), false));
+        }
+
+        return mAllAppList;
     }
 }
