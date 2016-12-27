@@ -15,6 +15,7 @@ import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
+import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -113,11 +114,16 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
-        if (appChanged.isChanged()) {
-            mAllAppList.clear();
+        mAllAppList.clear();
+        if (appChanged.isHide()) {
             mAllAppList.addAll(DbCommon.queryAppList(false));
-            mAdapter.notifyDataSetChanged();
+            Logcat.d("appChanged.isHide()");
+        } else {
+            Logcat.d("!!!appChanged.isHide()");
+            mAllAppList.addAll(ToolsCommon.getAppChangedList(this, appChanged.isAdd(), appChanged.getPackageName()));
         }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

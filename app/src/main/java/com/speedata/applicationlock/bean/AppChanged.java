@@ -26,17 +26,43 @@ package com.speedata.applicationlock.bean;
  */
 public class AppChanged {
 
-    private boolean isChanged;
+    private boolean isHide;
+    private String packageName;
+    private boolean isAdd;
 
-    public boolean isChanged() {
-        return isChanged;
+    public boolean isHide() {
+        return isHide;
     }
 
-    public void setChanged(boolean changed) {
-        isChanged = changed;
+    public void setHide(boolean hide) {
+        isHide = hide;
     }
 
-    public AppChanged(boolean isChanged) {
-        this.isChanged = isChanged;
+    public String getPackageName() {
+        return packageName;
     }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+
+    public boolean isAdd() {
+        return isAdd;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
+
+    public AppChanged(boolean isAdd, String packageName) {
+        this.isAdd = isAdd;
+        this.packageName = packageName;
+    }
+
+    public AppChanged(boolean isHide) {
+        this.isHide = isHide;
+    }
+
+
 }
