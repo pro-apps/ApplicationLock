@@ -69,8 +69,13 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         if (DbCommon.queryAppList(false).isEmpty()) {
             mAllAppList.addAll(ToolsCommon.getAllAppList(this));
             DbCommon.saveAppList(mAllAppList);
-        } else
+        } else {
+            Logcat.d("start  time is::" + System.currentTimeMillis());
             mAllAppList.addAll(DbCommon.queryAppList(false));
+            mLoadAppThread.start();
+            Logcat.d("end  time is::" + System.currentTimeMillis());
+        }
+
         mAdapter.notifyDataSetChanged();
 
     }
@@ -133,4 +138,14 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return keyCode != KeyEvent.KEYCODE_BACK && super.onKeyDown(keyCode, event);
     }
+
+    /**
+     * 开启比对已安装应用和数据库app比对线程
+     */
+    private Thread mLoadAppThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            ToolsCommon.getCompareDbList(MainActivity.this);
+        }
+    });
 }

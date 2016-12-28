@@ -9,9 +9,13 @@ import android.graphics.drawable.Drawable;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.R;
+import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
+import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +131,45 @@ public class ToolsCommon {
             SQLite.delete(AppInfo.class).where(AppInfo_Table.appPkg.is(pkgName)).async().execute();
         }
         mAllAppList.addAll(DbCommon.queryAppList(false));
-
         return mAllAppList;
+    }
+
+    /**
+     * 获取重新加载的app
+     *
+     * @param context context
+     */
+    public static void getCompareDbList(Context context) {
+        boolean isRequestReload = false;
+        List<AppInfo> mAllAppList = new ArrayList<>();
+        mAllAppList.addAll(getAllAppList(context));
+        List<String> mAllAppActList = new ArrayList<>();
+        for (int i = 0; i < mAllAppList.size(); i++) {
+            mAllAppActList.add(mAllAppList.get(i).getActName());
+        }
+        List<AppInfo> mDbAppList = new ArrayList<>();
+        mDbAppList.addAll(SQLite.select().from(AppInfo.class).queryList());
+        List<String> mDbActList = new ArrayList<>();
+        for (int i = 0; i < mDbAppList.size(); i++) {
+            mDbActList.add(mDbAppList.get(i).getActName());
+        }
+
+        for (int i = 0; i < mAllAppList.size(); i++) {
+            Logcat.d("全部app**********" + mAllAppList.get(i).getActName());
+            if (!mDbActList.contains(mAllAppActList.get(i))) {
+                mAllAppList.get(i).save();
+                isRequestReload = true;
+            }
+
+        }
+        for (int i = 0; i < mDbAppList.size(); i++) {
+            if (!mAllAppActList.contains(mDbActList.get(i))) {
+                Logcat.d("准备删除了***********" + mDbAppList.get(i).getActName());
+                SQLite.delete().from(AppInfo.class).where(AppInfo_Table.actName.is(mDbAppList.get(i).getActName())).async().execute();
+                isRequestReload = true;
+            }
+        }
+        if (isRequestReload)
+            EventBus.getDefault().post(new AppChanged(true));
     }
 }
