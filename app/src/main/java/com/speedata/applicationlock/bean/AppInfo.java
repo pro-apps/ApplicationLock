@@ -45,6 +45,13 @@ public class AppInfo extends BaseModel {
     public AppInfo() {
     }
 
+    public AppInfo(AppInfo other) {
+        this.actName = other.getActName();
+        this.appPkg = other.getAppPkg();
+        this.appLabel = other.getAppLabel();
+        this.isHide = other.isHide();
+    }
+
     public AppInfo(String actName, String appPkg, String appLabel, boolean isHide) {
         this.actName = actName;
         this.appPkg = appPkg;
