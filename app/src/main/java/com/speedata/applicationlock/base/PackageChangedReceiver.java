@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.speedata.applicationlock.bean.AppChanged;
-import com.speedata.applicationlock.common.utils.Logcat;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,12 +37,10 @@ public class PackageChangedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
             String packageName = intent.getDataString();
-            Logcat.d("安装了应用");
             EventBus.getDefault().post(new AppChanged(true, packageName));
         }
         if (intent.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
-            Logcat.d("卸载了应用");
-            String packageName = intent.getDataString();
+            String packageName = intent.getDataString().replace("package:", "").trim();
             EventBus.getDefault().post(new AppChanged(false, packageName));
         }
     }

@@ -11,7 +11,6 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
-import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import java.util.ArrayList;
@@ -115,25 +114,20 @@ public class ToolsCommon {
      */
     public static List<AppInfo> getAppChangedList(Context context, boolean isAdd, String pkgName) {
 
-        Logcat.d("更改的包名是：：：" + pkgName);
         List<AppInfo> mAllAppList = new ArrayList<>();
         if (isAdd) {
             Intent mIntent = new Intent(Intent.ACTION_MAIN, null);
             mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             List<ResolveInfo> mAppList = context.getPackageManager().queryIntentActivities(mIntent, 0);
-
-            Logcat.d("更改的包名是11111：：：" + mAppList.get(mAppList.size()-1).activityInfo.packageName);
             AppInfo mAppInfo = new AppInfo(mAppList.get(mAppList.size() - 1).activityInfo.name,
                     mAppList.get(mAppList.size() - 1).activityInfo.packageName,
                     mAppList.get(mAppList.size() - 1).activityInfo.loadLabel(context.getPackageManager()).toString(), false);
             mAppInfo.save();
         } else {
-            SQLite.delete(AppInfo.class)
-                    .where(AppInfo_Table.appPkg.is(pkgName))
-                    .async()
-                    .execute();
+            SQLite.delete(AppInfo.class).where(AppInfo_Table.appPkg.is(pkgName)).async().execute();
         }
         mAllAppList.addAll(DbCommon.queryAppList(false));
+
         return mAllAppList;
     }
 }

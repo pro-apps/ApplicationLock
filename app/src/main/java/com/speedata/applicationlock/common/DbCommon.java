@@ -1,13 +1,12 @@
 package com.speedata.applicationlock.common;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
 import com.speedata.applicationlock.common.db.HideAppDB;
 
 import java.util.List;
-
-import static com.raizlabs.android.dbflow.sql.language.SQLite.select;
 
 /**
  * ----------Dragon be here!----------/
@@ -43,7 +42,7 @@ public class DbCommon {
      */
     public static List<AppInfo> queryAppList(boolean isHide) {
 
-        return select().from(AppInfo.class).where(AppInfo_Table.isHide.is(isHide)).queryList();
+        return SQLite.select().from(AppInfo.class).where(AppInfo_Table.isHide.is(isHide)).queryList();
     }
 
     /**

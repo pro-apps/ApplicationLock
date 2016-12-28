@@ -117,12 +117,9 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         mAllAppList.clear();
         if (appChanged.isHide()) {
             mAllAppList.addAll(DbCommon.queryAppList(false));
-            Logcat.d("appChanged.isHide()");
         } else {
-            Logcat.d("!!!appChanged.isHide()");
             mAllAppList.addAll(ToolsCommon.getAppChangedList(this, appChanged.isAdd(), appChanged.getPackageName()));
         }
-
         mAdapter.notifyDataSetChanged();
     }
 
