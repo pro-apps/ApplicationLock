@@ -173,24 +173,4 @@ public class ToolsCommon {
             EventBus.getDefault().post(new AppChanged(true));
     }
 
-    /**
-     * @param context context
-     * @param mAllAppList list1
-     * @param mDbAppList  list2
-     */
-    public static void getCompareDbList(Context context, List<AppInfo> mAllAppList,
-                                        List<AppInfo> mDbAppList) {
-        List<AppInfo> tempList = new ArrayList<>();
-        for (int i = 0; i < mAllAppList.size(); i++) {
-            for (int j = 0; j < mDbAppList.size(); j++) {
-                if (mAllAppList.get(i).getActName().equals(mDbAppList.get(j).getActName())) {
-                    tempList.add(new AppInfo(mDbAppList.get(j)));
-                    break;
-                }
-            }
-        }
-        mDbAppList.clear();
-        mDbAppList.addAll(tempList);
-    }
-
 }
