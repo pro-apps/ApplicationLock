@@ -12,7 +12,6 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
-import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -155,7 +154,6 @@ public class ToolsCommon {
         }
 
         for (int i = 0; i < mAllAppList.size(); i++) {
-            Logcat.d("全部app**********" + mAllAppList.get(i).getActName());
             if (!mDbActList.contains(mAllAppActList.get(i))) {
                 mAllAppList.get(i).save();
                 isRequestReload = true;
@@ -164,7 +162,6 @@ public class ToolsCommon {
         }
         for (int i = 0; i < mDbAppList.size(); i++) {
             if (!mAllAppActList.contains(mDbActList.get(i))) {
-                Logcat.d("准备删除了***********" + mDbAppList.get(i).getActName());
                 SQLite.delete().from(AppInfo.class).where(AppInfo_Table.actName.is(mDbAppList.get(i).getActName())).async().execute();
                 isRequestReload = true;
             }

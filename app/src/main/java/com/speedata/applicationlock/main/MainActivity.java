@@ -70,10 +70,8 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
             mAllAppList.addAll(ToolsCommon.getAllAppList(this));
             DbCommon.saveAppList(mAllAppList);
         } else {
-            Logcat.d("start  time is::" + System.currentTimeMillis());
             mAllAppList.addAll(DbCommon.queryAppList(false));
             mLoadAppThread.start();
-            Logcat.d("end  time is::" + System.currentTimeMillis());
         }
 
         mAdapter.notifyDataSetChanged();
