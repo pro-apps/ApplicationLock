@@ -1,5 +1,6 @@
 package com.speedata.applicationlock.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
@@ -15,6 +19,9 @@ import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
+import com.speedata.applicationlock.common.utils.ToolToast;
+import com.speedata.applicationlock.hide.HideActivity;
+import com.speedata.applicationlock.show.ShowActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,10 +57,12 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  *         QQ:282921012
  *         Description:主页面
  */
-public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener {
+public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener,
+        AdapterView.OnItemSelectedListener {
 
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +89,10 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        View mView = getLayoutInflater().inflate(R.layout.view_options_view, new LinearLayout(this), false);
+        toolbar.addView(mView, 0);
+        Spinner mSourceSpinner = (Spinner) mView.findViewById(R.id.spn_options);
+        mSourceSpinner.setOnItemSelectedListener(this);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new GridLayoutManager(this, 4));
         mAllAppList = new ArrayList<>();
@@ -104,6 +117,7 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
 
         switch (item.getItemId()) {
             case R.id.action_admin:
+                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, true);
                 return true;
             case R.id.action_clear:
                 return true;
@@ -145,4 +159,22 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
             ToolsCommon.getCompareDbList(AdminActivity.this);
         }
     });
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, HideActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, ShowActivity.class));
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
