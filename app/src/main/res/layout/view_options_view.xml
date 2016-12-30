@@ -16,7 +16,7 @@
         android:id="@+id/spn_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:dropDownVerticalOffset="22dp"
+        android:dropDownVerticalOffset="@dimen/dp22"
         android:entries="@array/options"
         android:visibility="gone"/>
 </LinearLayout>

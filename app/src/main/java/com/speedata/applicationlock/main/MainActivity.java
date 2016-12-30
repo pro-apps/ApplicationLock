@@ -1,5 +1,6 @@
 package com.speedata.applicationlock.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,14 +9,20 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
+import com.speedata.applicationlock.bean.AdminTag;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.utils.ToolToast;
+import com.speedata.applicationlock.hide.HideActivity;
+import com.speedata.applicationlock.show.ShowActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,13 +54,17 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  * 　　　　　┗┻┛　┗┻┛
  * ━━━━━━神兽出没━━━━━━
  *
- * @author Reginer in  2016/12/14 14:03.
- *         Description:显示全部应用
+ * @author Reginer in  2016/12/30 9:42.
+ *         QQ:282921012
+ *         Description:主页面
  */
-public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener {
+public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener,
+        AdapterView.OnItemSelectedListener {
 
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
+    private Spinner mSourceSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +91,11 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        View mView = getLayoutInflater().inflate(R.layout.view_options_view, new LinearLayout(this), false);
+        toolbar.addView(mView, 0);
+        mSourceSpinner = (Spinner) mView.findViewById(R.id.spn_options);
+        mSourceSpinner.setSelection(0, true);
+        mSourceSpinner.setOnItemSelectedListener(this);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new GridLayoutManager(this, 4));
         mAllAppList = new ArrayList<>();
@@ -95,7 +111,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
         return true;
     }
 
@@ -103,16 +119,23 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_hide:
+            case R.id.action_admin:
                 ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
                 return true;
-            case R.id.action_show:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
+            case R.id.action_clear:
+                return true;
+            case R.id.action_about:
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getShowSpinner(AdminTag adminTag) {
+        if (adminTag.isAdmin()) {
+            mSourceSpinner.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
@@ -145,4 +168,24 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
             ToolsCommon.getCompareDbList(MainActivity.this);
         }
     });
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, HideActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, ShowActivity.class));
+                break;
+
+        }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 }
