@@ -15,7 +15,6 @@ import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
-import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,10 +46,11 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
  * 　　　　　┗┻┛　┗┻┛
  * ━━━━━━神兽出没━━━━━━
  *
- * @author Reginer in  2016/12/14 14:03.
- *         Description:显示全部应用
+ * @author Reginer in  2016/12/30 9:42.
+ *         QQ:282921012
+ *         Description:主页面
  */
-public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener {
+public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnItemClickListener {
 
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
         return true;
     }
 
@@ -103,11 +103,11 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_hide:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, true);
+            case R.id.action_admin:
                 return true;
-            case R.id.action_show:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, false);
+            case R.id.action_clear:
+                return true;
+            case R.id.action_about:
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -142,7 +142,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     private Thread mLoadAppThread = new Thread(new Runnable() {
         @Override
         public void run() {
-            ToolsCommon.getCompareDbList(MainActivity.this);
+            ToolsCommon.getCompareDbList(AdminActivity.this);
         }
     });
 }

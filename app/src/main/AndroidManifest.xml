@@ -17,19 +17,30 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:windowSoftInputMode="adjustPan"
         tools:ignore="GoogleAppIndexingWarning">
+        <!--<activity-->
+            <!--android:name=".main.MainActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- <category android:name="android.intent.category.HOME"/> -->
+        <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+        <!-- <category android:name="android.intent.category.MONKEY"/> -->
+
         <activity
-            android:name=".main.MainActivity"
+            android:name=".main.AdminActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-        <!-- <category android:name="android.intent.category.HOME"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT"/> -->
-        <!-- <category android:name="android.intent.category.MONKEY"/> -->
         <activity android:name=".hide.HideActivity">
         </activity>
         <activity android:name=".show.ShowActivity">
@@ -46,6 +57,7 @@
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
+
 
     </application>
 

@@ -12,4 +12,7 @@
     <string name="modify_success">密码修改成功</string>
     <string name="please_input_pwd_new">请输入新密码</string>
     <string name="app_error">应用程序加载异常</string>
+    <string name="admin_mode">管理员模式</string>
+    <string name="clear_recent_apps">清理最近使用</string>
+    <string name="about">关于</string>
 </resources>
