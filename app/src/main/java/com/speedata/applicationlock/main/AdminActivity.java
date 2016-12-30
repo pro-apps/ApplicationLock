@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
+import com.speedata.applicationlock.bean.AdminTag;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
@@ -62,6 +63,7 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
 
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
+    private Spinner mSourceSpinner;
 
 
     @Override
@@ -91,7 +93,7 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
         setSupportActionBar(toolbar);
         View mView = getLayoutInflater().inflate(R.layout.view_options_view, new LinearLayout(this), false);
         toolbar.addView(mView, 0);
-        Spinner mSourceSpinner = (Spinner) mView.findViewById(R.id.spn_options);
+        mSourceSpinner = (Spinner) mView.findViewById(R.id.spn_options);
         mSourceSpinner.setOnItemSelectedListener(this);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new GridLayoutManager(this, 4));
@@ -117,7 +119,7 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
 
         switch (item.getItemId()) {
             case R.id.action_admin:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, true);
+                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
                 return true;
             case R.id.action_clear:
                 return true;
@@ -127,6 +129,12 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
         return super.onOptionsItemSelected(item);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getShowSpinner(AdminTag adminTag) {
+        if (adminTag.isAdmin()) {
+            mSourceSpinner.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
@@ -162,6 +170,8 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
         switch (position) {
             case 0:
                 startActivity(new Intent(this, HideActivity.class));
@@ -171,10 +181,11 @@ public class AdminActivity extends BaseActivity implements CommonRvAdapter.OnIte
                 break;
 
         }
+
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

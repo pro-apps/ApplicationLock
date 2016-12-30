@@ -15,4 +15,5 @@
     <string name="admin_mode">管理员模式</string>
     <string name="clear_recent_apps">清理最近使用</string>
     <string name="about">关于</string>
+    <string name="show_pwd">显示密码</string>
 </resources>

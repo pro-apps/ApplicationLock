@@ -104,10 +104,10 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
         switch (item.getItemId()) {
             case R.id.action_hide:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, true);
+                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
                 return true;
             case R.id.action_show:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout, false);
+                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -3,19 +3,22 @@ package com.speedata.applicationlock.common.utils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.App;
-import com.speedata.applicationlock.hide.HideActivity;
-import com.speedata.applicationlock.show.ShowActivity;
+import com.speedata.applicationlock.bean.AdminTag;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * ----------Dragon be here!----------/
@@ -66,13 +69,14 @@ public class ToolToast {
      * @param context 上下文
      * @param viewId  自定义布局View
      */
-    public static Dialog showPwdDialog(final Context context, int viewId, final boolean isShow) {
+    public static Dialog showPwdDialog(final Context context, int viewId) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View mView = LayoutInflater.from(context).inflate(viewId, null);
         builder.setView(mView);
         final EditText mPwd = (EditText) mView.findViewById(R.id.et_pwd);
         final EditText mPwdNew = (EditText) mView.findViewById(R.id.et_pwd_new);
         final Button mBtnModify = (Button) mView.findViewById(R.id.btn_modify_pwd);
+        final CheckBox mCheckBox = (CheckBox) mView.findViewById(R.id.cb_is_show);
         final Dialog dialog = builder.show();
         mBtnModify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,10 +100,7 @@ public class ToolToast {
                         ToolToast.toastShort(context.getString(R.string.pwd_error));
                 } else {
                     if (mPwd.getText().toString().equals(SPUtils.get(context, "pwd", "1234", "pwd_file"))) {
-                        if (isShow)
-                            context.startActivity(new Intent(context, HideActivity.class));
-                        else
-                            context.startActivity(new Intent(context, ShowActivity.class));
+                        EventBus.getDefault().post(new AdminTag(true));
                         dialog.dismiss();
                     } else {
                         //密码错误
@@ -107,6 +108,15 @@ public class ToolToast {
                     }
 
                 }
+            }
+        });
+
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPwd.setInputType(isChecked ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                        InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                mPwd.setSelection(mPwd.getText().length());
             }
         });
         mView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
