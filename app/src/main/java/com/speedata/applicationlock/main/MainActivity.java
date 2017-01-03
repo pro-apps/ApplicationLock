@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
@@ -22,6 +21,7 @@ import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.hide.HideActivity;
+import com.speedata.applicationlock.main.widget.ReselectSpinner;
 import com.speedata.applicationlock.show.ShowActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
-    private Spinner mSourceSpinner;
+    private ReselectSpinner mSourceSpinner;
 
 
     @Override
@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         setSupportActionBar(toolbar);
         View mView = getLayoutInflater().inflate(R.layout.view_options_view, new LinearLayout(this), false);
         toolbar.addView(mView, 0);
-        mSourceSpinner = (Spinner) mView.findViewById(R.id.spn_options);
+        mSourceSpinner = (ReselectSpinner) mView.findViewById(R.id.spn_options);
         mSourceSpinner.setSelection(0, true);
         mSourceSpinner.setOnItemSelectedListener(this);
         RecyclerView mRvContent = (RecyclerView) findViewById(R.id.rv_content);

@@ -12,7 +12,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp20"/>
 
-    <Spinner
+    <com.speedata.applicationlock.main.widget.ReselectSpinner
         android:id="@+id/spn_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
