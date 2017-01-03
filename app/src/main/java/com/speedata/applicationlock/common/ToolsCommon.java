@@ -1,5 +1,6 @@
 package com.speedata.applicationlock.common;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +13,12 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
+import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,6 +171,37 @@ public class ToolsCommon {
         }
         if (isRequestReload)
             EventBus.getDefault().post(new AppChanged(true));
+    }
+
+    /**
+     * 结束最近使用程序
+     */
+    public static void clearRecentTask() {
+        Method mRemoveTask;
+        ActivityManager mActivityManager;
+        try {
+            Class<?> ActivityThread = Class.forName("android.app.ActivityThread");
+            //获取currentActivityThread 对象
+            Method method = ActivityThread.getMethod("currentActivityThread");
+            Object currentActivityThread = method.invoke(ActivityThread);
+            Method method2 = currentActivityThread.getClass().getMethod("getApplication");
+            //获取 Context对象
+            Context CONTEXT_INSTANCE = (Context) method2.invoke(currentActivityThread);
+            Class<?> activityManagerClass = Class.forName("android.app.ActivityManager");
+            mActivityManager = (ActivityManager) CONTEXT_INSTANCE.getSystemService(Context.ACTIVITY_SERVICE);
+            mRemoveTask = activityManagerClass.getMethod("removeTask", int.class);
+            mRemoveTask.setAccessible(true);
+//            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, 0);
+
+            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(20, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
+
+            for (int i = 1; i < mRecentTasks.size(); i++) {
+                Logcat.d("pkgName  is::" + mRecentTasks.get(i).origActivity.getPackageName());
+                mRemoveTask.invoke(mActivityManager, mRecentTasks.get(i).persistentId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
