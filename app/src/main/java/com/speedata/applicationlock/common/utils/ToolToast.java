@@ -129,5 +129,25 @@ public class ToolToast {
         return dialog;
     }
 
+    /**
+     * 显示关于页面
+     *
+     * @param context context
+     * @param viewId  viewId
+     * @return dialog
+     */
+    public static Dialog showAboutDialog(final Context context, int viewId) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View mView = LayoutInflater.from(context).inflate(viewId, null);
+        builder.setView(mView);
+        final Dialog dialog = builder.show();
+        mView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+    }
 
 }

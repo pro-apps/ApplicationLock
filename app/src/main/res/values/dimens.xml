@@ -6,4 +6,6 @@
     <dimen name="sp20">20sp</dimen>
     <dimen name="dp10">10dp</dimen>
     <dimen name="dp22">22dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="sp15">15sp</dimen>
 </resources>

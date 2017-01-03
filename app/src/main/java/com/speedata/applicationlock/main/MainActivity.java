@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
             case R.id.action_clear:
                 return true;
             case R.id.action_about:
+                ToolToast.showAboutDialog(this,R.layout.view_about_layout);
                 return true;
         }
         return super.onOptionsItemSelected(item);

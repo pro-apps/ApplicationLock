@@ -16,4 +16,5 @@
     <string name="clear_recent_apps">清理最近使用</string>
     <string name="about">关于</string>
     <string name="show_pwd">显示密码</string>
+    <string name="show_about">AppLock&#160;&#160;&#160;&#160;&#160;&#160;1.0.0\nCopyright © 2016&#8211;2017 By Reginer All rights reserved.</string>
 </resources>
