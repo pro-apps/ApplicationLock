@@ -177,27 +177,19 @@ public class ToolsCommon {
      * 结束最近使用程序
      */
     @SuppressWarnings("deprecation")
-    public static void clearRecentTask() {
+    public static void clearRecentTask(Context context) {
         Method mRemoveTask;
         ActivityManager mActivityManager;
         try {
-            Class<?> ActivityThread = Class.forName("android.app.ActivityThread");
-            //获取currentActivityThread 对象
-            Method method = ActivityThread.getMethod("currentActivityThread");
-            Object currentActivityThread = method.invoke(ActivityThread);
-            Method method2 = currentActivityThread.getClass().getMethod("getApplication");
-            //获取 Context对象
-            Context CONTEXT_INSTANCE = (Context) method2.invoke(currentActivityThread);
             Class<?> activityManagerClass = Class.forName("android.app.ActivityManager");
-            mActivityManager = (ActivityManager) CONTEXT_INSTANCE.getSystemService(Context.ACTIVITY_SERVICE);
+            mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             mRemoveTask = activityManagerClass.getMethod("removeTask", int.class);
             mRemoveTask.setAccessible(true);
-//            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, 0);
-
             List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
 
             for (int i = 1; i < mRecentTasks.size(); i++) {
-                Logcat.d("pkgName  is::" + mRecentTasks.get(i).origActivity.getPackageName());
+
+                Logcat.d("mRecentTasks  size  is::"+mRecentTasks.size());
                 mRemoveTask.invoke(mActivityManager, mRecentTasks.get(i).persistentId);
             }
         } catch (Exception e) {

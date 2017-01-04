@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
                 ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
                 return true;
             case R.id.action_clear:
-                ToolsCommon.clearRecentTask();
+                ToolsCommon.clearRecentTask(this);
                 return true;
             case R.id.action_about:
                 ToolToast.showAboutDialog(this, R.layout.view_about_layout);
