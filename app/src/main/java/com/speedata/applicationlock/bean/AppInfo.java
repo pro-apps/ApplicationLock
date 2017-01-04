@@ -41,6 +41,8 @@ public class AppInfo extends BaseModel {
     private String appLabel;
     @Column
     private boolean isHide;
+    @Column
+    private boolean isWhiteList;
 
     public AppInfo() {
     }
@@ -85,4 +87,11 @@ public class AppInfo extends BaseModel {
     }
 
 
+    public boolean isWhiteList() {
+        return isWhiteList;
+    }
+
+    public void setWhiteList(boolean whiteList) {
+        isWhiteList = whiteList;
+    }
 }
