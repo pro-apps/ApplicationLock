@@ -176,6 +176,7 @@ public class ToolsCommon {
     /**
      * 结束最近使用程序
      */
+    @SuppressWarnings("deprecation")
     public static void clearRecentTask() {
         Method mRemoveTask;
         ActivityManager mActivityManager;
@@ -193,7 +194,7 @@ public class ToolsCommon {
             mRemoveTask.setAccessible(true);
 //            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, 0);
 
-            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(20, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
+            List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
 
             for (int i = 1; i < mRecentTasks.size(); i++) {
                 Logcat.d("pkgName  is::" + mRecentTasks.get(i).origActivity.getPackageName());
