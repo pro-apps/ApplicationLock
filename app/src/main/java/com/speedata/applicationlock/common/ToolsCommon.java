@@ -178,7 +178,7 @@ public class ToolsCommon {
     @SuppressWarnings("deprecation")
     public static void clearRecentTask(Context context) {
         List<String> pkgList = new ArrayList<>();
-        pkgList.addAll(getPkgList());
+        pkgList.addAll(getWhitePkgList());
         Method mRemoveTask;
         ActivityManager mActivityManager;
         try {
@@ -202,9 +202,9 @@ public class ToolsCommon {
      *
      * @return 所有app包名
      */
-    private static List<String> getPkgList() {
+    private static List<String> getWhitePkgList() {
         List<String> mPkgList = new ArrayList<>();
-        List<AppInfo> mAppList = SQLite.select().from(AppInfo.class).queryList();
+        List<AppInfo> mAppList = SQLite.select().from(AppInfo.class).where(AppInfo_Table.isWhiteList.is(true)).queryList();
         for (int i = 0; i < mAppList.size(); i++) {
             mPkgList.add(mAppList.get(i).getAppPkg());
         }
