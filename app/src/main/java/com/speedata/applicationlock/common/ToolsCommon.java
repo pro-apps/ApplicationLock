@@ -13,7 +13,6 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
-import com.speedata.applicationlock.common.utils.Logcat;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -178,6 +177,8 @@ public class ToolsCommon {
      */
     @SuppressWarnings("deprecation")
     public static void clearRecentTask(Context context) {
+        List<String> pkgList = new ArrayList<>();
+        pkgList.addAll(getPkgList());
         Method mRemoveTask;
         ActivityManager mActivityManager;
         try {
@@ -187,9 +188,8 @@ public class ToolsCommon {
             mRemoveTask.setAccessible(true);
             List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
             for (int i = 0; i < mRecentTasks.size(); i++) {
-                Logcat.d("mRecentTasks.get(i).origActivity is::" +
-                        mRecentTasks.get(i).baseIntent.getComponent().getPackageName());
-                mRemoveTask.invoke(mActivityManager, mRecentTasks.get(i).persistentId);
+                if (!pkgList.contains(mRecentTasks.get(i).baseIntent.getComponent().getPackageName()))
+                    mRemoveTask.invoke(mActivityManager, mRecentTasks.get(i).persistentId);
             }
 
         } catch (Exception e) {
@@ -197,4 +197,17 @@ public class ToolsCommon {
         }
     }
 
+    /**
+     * 获取所有app包名
+     *
+     * @return 所有app包名
+     */
+    private static List<String> getPkgList() {
+        List<String> mPkgList = new ArrayList<>();
+        List<AppInfo> mAppList = SQLite.select().from(AppInfo.class).queryList();
+        for (int i = 0; i < mAppList.size(); i++) {
+            mPkgList.add(mAppList.get(i).getAppPkg());
+        }
+        return mPkgList;
+    }
 }
