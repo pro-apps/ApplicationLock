@@ -3,9 +3,39 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".main.MainActivity">
     <item
-        android:id="@+id/action_admin"
+        android:id="@+id/action_user"
         android:orderInCategory="100"
-        android:title="@string/admin_mode"
+        android:title="@string/user_mode"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_management"
+        android:orderInCategory="100"
+        android:title="@string/app_manager"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_import"
+        android:orderInCategory="100"
+        android:title="@string/Import"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_export"
+        android:orderInCategory="100"
+        android:title="@string/export"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_options"
+        android:orderInCategory="100"
+        android:title="@string/options"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_launch_settings"
+        android:orderInCategory="100"
+        android:title="@string/launch_settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_reset_to_default"
+        android:orderInCategory="100"
+        android:title="@string/reset_to_default"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_clear"
@@ -16,5 +46,10 @@
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:title="@string/about"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="@string/exit"
         app:showAsAction="never"/>
 </menu>

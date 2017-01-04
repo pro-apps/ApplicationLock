@@ -17,4 +17,11 @@
     <string name="about">关于</string>
     <string name="show_pwd">显示密码</string>
     <string name="show_about">AppLock&#160;&#160;&#160;&#160;&#160;&#160;1.0.0\nCopyright © 2016&#8211;2017 By Reginer All rights reserved.</string>
+    <string name="user_mode">用户模式</string>
+    <string name="exit">退出</string>
+    <string name="Import">导入</string>
+    <string name="export">导出</string>
+    <string name="options">选项</string>
+    <string name="launch_settings">系统设置</string>
+    <string name="reset_to_default">恢复默认</string>
 </resources>

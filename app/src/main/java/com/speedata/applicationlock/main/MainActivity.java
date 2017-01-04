@@ -19,7 +19,7 @@ import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
-import com.speedata.applicationlock.common.utils.ToolToast;
+import com.speedata.applicationlock.common.ViewCommon;
 import com.speedata.applicationlock.hide.HideActivity;
 import com.speedata.applicationlock.main.widget.ReselectSpinner;
 import com.speedata.applicationlock.show.ShowActivity;
@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
     private ReselectSpinner mSourceSpinner;
+    public static boolean isAdmin = false;
 
 
     @Override
@@ -110,26 +111,20 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         ToolsCommon.startApp(mAllAppList, position, this);
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_admin, menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if (isAdmin)
+            getMenuInflater().inflate(R.menu.menu_admin, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_user, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_admin:
-                ToolToast.showPwdDialog(this, R.layout.view_input_pwd_dialog_layout);
-                return true;
-            case R.id.action_clear:
-                ToolsCommon.clearRecentTask(this);
-                return true;
-            case R.id.action_about:
-                ToolToast.showAboutDialog(this, R.layout.view_about_layout);
-                return true;
-        }
+        ViewCommon.setMenuOptions(item, this);
         return super.onOptionsItemSelected(item);
     }
 

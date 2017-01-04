@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.App;
 import com.speedata.applicationlock.bean.AdminTag;
+import com.speedata.applicationlock.main.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -101,6 +102,7 @@ public class ToolToast {
                 } else {
                     if (mPwd.getText().toString().equals(SPUtils.get(context, "pwd", "1234", "pwd_file"))) {
                         EventBus.getDefault().post(new AdminTag(true));
+                        MainActivity.isAdmin=true;
                         dialog.dismiss();
                     } else {
                         //密码错误
