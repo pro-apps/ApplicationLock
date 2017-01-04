@@ -2,6 +2,7 @@
 <resources>
     <string-array name="options">
         <item>隐藏应用</item>
-        <item>显示应用 </item>
+        <item>显示应用</item>
+        <item>配置白名单</item>
     </string-array>
 </resources>

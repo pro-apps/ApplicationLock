@@ -23,6 +23,7 @@ import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.hide.HideActivity;
 import com.speedata.applicationlock.main.widget.ReselectSpinner;
 import com.speedata.applicationlock.show.ShowActivity;
+import com.speedata.applicationlock.white.WhiteListActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -173,13 +174,15 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         switch (position) {
             case 0:
                 startActivity(new Intent(this, HideActivity.class));
                 break;
             case 1:
                 startActivity(new Intent(this, ShowActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, WhiteListActivity.class));
                 break;
 
         }
