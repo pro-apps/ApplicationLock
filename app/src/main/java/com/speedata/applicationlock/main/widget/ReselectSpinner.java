@@ -43,19 +43,10 @@ public class ReselectSpinner extends AppCompatSpinner {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    public void setSelection(int position, boolean animate) {
-        super.setSelection(position, animate);
-        if (position == getSelectedItemPosition() && getOnItemSelectedListener() != null) {
-            getOnItemSelectedListener().onItemSelected(this, getSelectedView(),
-                    position, getSelectedItemId());
-        }
-    }
 
     @Override
     public void setSelection(int position) {
-        super.setSelection(position);
-        if (position == getSelectedItemPosition() && getOnItemSelectedListener() != null) {
+        if (getOnItemSelectedListener() != null) {
             getOnItemSelectedListener().onItemSelected(this, getSelectedView(),
                     position, getSelectedItemId());
         }

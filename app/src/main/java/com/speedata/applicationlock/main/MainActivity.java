@@ -174,6 +174,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         switch (position) {
             case 0:
                 startActivity(new Intent(this, HideActivity.class));
@@ -184,7 +185,6 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
             case 2:
                 startActivity(new Intent(this, WhiteListActivity.class));
                 break;
-
         }
 
 
