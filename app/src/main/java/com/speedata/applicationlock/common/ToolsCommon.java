@@ -186,12 +186,12 @@ public class ToolsCommon {
             mRemoveTask = activityManagerClass.getMethod("removeTask", int.class);
             mRemoveTask.setAccessible(true);
             List<ActivityManager.RecentTaskInfo> mRecentTasks = mActivityManager.getRecentTasks(100, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
-
-            for (int i = 1; i < mRecentTasks.size(); i++) {
-
-                Logcat.d("mRecentTasks  size  is::"+mRecentTasks.size());
+            for (int i = 0; i < mRecentTasks.size(); i++) {
+                Logcat.d("mRecentTasks.get(i).origActivity is::" +
+                        mRecentTasks.get(i).baseIntent.getComponent().getPackageName());
                 mRemoveTask.invoke(mActivityManager, mRecentTasks.get(i).persistentId);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
