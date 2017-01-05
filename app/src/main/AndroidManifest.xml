@@ -55,8 +55,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".white.WhiteListActivity">
-        </activity>
         <activity
             android:label="@string/app_manager"
             android:name=".manager.activity.ManagerActivity"
