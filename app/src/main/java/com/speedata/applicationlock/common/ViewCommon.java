@@ -1,11 +1,13 @@
 package com.speedata.applicationlock.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.main.MainActivity;
+import com.speedata.applicationlock.manager.activity.ManagerActivity;
 
 /**
  * ----------Dragon be here!----------/
@@ -48,6 +50,7 @@ public class ViewCommon {
                 MainActivity.isAdmin = false;
                 return true;
             case R.id.action_management:
+                context.startActivity(new Intent(context, ManagerActivity.class));
                 //action_management
                 return true;
             case R.id.action_import:

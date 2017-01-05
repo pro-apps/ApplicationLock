@@ -57,7 +57,10 @@
 
         <activity android:name=".white.WhiteListActivity">
         </activity>
-        <activity android:name=".manager.activity.ManagerActivity">
+        <activity
+            android:label="@string/app_manager"
+            android:name=".manager.activity.ManagerActivity"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

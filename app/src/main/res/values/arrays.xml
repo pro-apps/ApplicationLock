@@ -5,4 +5,9 @@
         <item>显示应用</item>
         <item>配置白名单</item>
     </string-array>
+    <string-array name="manager_options">
+        <item>显示应用</item>
+        <item>自启应用</item>
+        <item>免杀应用</item>
+    </string-array>
 </resources>
