@@ -1,6 +1,5 @@
 package com.speedata.applicationlock.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +19,8 @@ import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
 import com.speedata.applicationlock.common.ToolsCommon;
 import com.speedata.applicationlock.common.ViewCommon;
-import com.speedata.applicationlock.hide.HideActivity;
+import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.main.widget.ReselectSpinner;
-import com.speedata.applicationlock.show.ShowActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -171,13 +169,10 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
         switch (position) {
             case 0:
-                startActivity(new Intent(this, HideActivity.class));
+                ToolToast.toastShort("allow app");
                 break;
             case 1:
-                startActivity(new Intent(this, ShowActivity.class));
-                break;
-            case 2:
-//                startActivity(new Intent(this, WhiteListActivity.class));
+                ToolToast.toastShort("auto start");
                 break;
         }
 
