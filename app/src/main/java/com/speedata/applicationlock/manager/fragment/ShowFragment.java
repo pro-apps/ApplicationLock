@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseFragment;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
+import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.manager.adapter.ShowAppAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,7 +53,7 @@ import xyz.reginer.baseadapter.CommonRvAdapter;
 public class ShowFragment extends BaseFragment implements View.OnClickListener, CommonRvAdapter.OnItemClickListener {
 
     private ShowAppAdapter mAdapter;
-    private List<AppInfo> mCanShowAppList;
+    private List<AppInfo> mAppList;
 
     public ShowFragment() {
         // Required empty public constructor
@@ -67,9 +69,9 @@ public class ShowFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void initView(View mView) {
-        mCanShowAppList = new ArrayList<>();
-        mCanShowAppList.addAll(DbCommon.queryAppList(true));
-        mAdapter = new ShowAppAdapter(getActivity(), R.layout.view_hide_app_item_layout, mCanShowAppList);
+        mAppList = new ArrayList<>();
+        mAppList.addAll(SQLite.select().from(AppInfo.class).queryList());
+        mAdapter = new ShowAppAdapter(getActivity(), R.layout.view_hide_app_item_layout, mAppList);
         RecyclerView mRvContent = (RecyclerView) mView.findViewById(R.id.rv_content);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
@@ -89,14 +91,15 @@ public class ShowFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void save() {
-        DbCommon.saveAppList(mCanShowAppList);
+        DbCommon.saveAppList(mAppList);
         EventBus.getDefault().post(new AppChanged(true));
+        ToolToast.toastShort(getString(R.string.config_success));
     }
 
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
-        mCanShowAppList.get(position).setHide(!mCanShowAppList.get(position).isHide());
+        mAppList.get(position).setHide(!mAppList.get(position).isHide());
         mAdapter.notifyDataSetChanged();
     }
 }

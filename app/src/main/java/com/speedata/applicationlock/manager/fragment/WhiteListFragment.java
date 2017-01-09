@@ -15,6 +15,7 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseFragment;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.common.DbCommon;
+import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.manager.adapter.WhiteListAdapter;
 
 import java.util.ArrayList;
@@ -91,6 +92,7 @@ public class WhiteListFragment extends BaseFragment implements View.OnClickListe
 
     private void save() {
         DbCommon.saveAppList(mWhiteList);
+        ToolToast.toastShort(getString(R.string.config_success));
     }
 
     @Override
