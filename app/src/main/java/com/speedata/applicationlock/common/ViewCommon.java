@@ -8,6 +8,7 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.common.utils.ToolToast;
 import com.speedata.applicationlock.main.MainActivity;
 import com.speedata.applicationlock.manager.activity.ManagerActivity;
+import com.speedata.applicationlock.options.OptionsActivity;
 
 /**
  * ----------Dragon be here!----------/
@@ -61,6 +62,7 @@ public class ViewCommon {
                 return true;
             case R.id.action_options:
                 //action_options
+                context.startActivity(new Intent(context, OptionsActivity.class));
                 return true;
             case R.id.action_launch_settings:
                 //action_options

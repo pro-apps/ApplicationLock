@@ -28,4 +28,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="config_success">操作成功</string>
+    <string name="usb_allow">USB连接许可</string>
+    <string name="allow_to_content_pc">允许通过USB连接PC</string>
 </resources>

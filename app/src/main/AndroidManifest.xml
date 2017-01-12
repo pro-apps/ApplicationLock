@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.GET_DETAILED_TASKS"/>
     <uses-permission android:name="android.permission.REORDER_TASKS"/>
     <uses-permission android:name="android.permission.REMOVE_TASKS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
         android:name=".base.App"
@@ -30,7 +32,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -52,9 +54,11 @@
         </receiver>
 
         <activity
-            android:label="@string/app_manager"
             android:name=".manager.activity.ManagerActivity"
+            android:label="@string/app_manager"
             android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".options.OptionsActivity">
         </activity>
     </application>
 
