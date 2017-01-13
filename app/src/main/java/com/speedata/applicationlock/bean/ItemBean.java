@@ -1,4 +1,4 @@
-package com.speedata.applicationlock.options.source;
+package com.speedata.applicationlock.bean;
 
 /**
  * ----------Dragon be here!----------/
@@ -45,7 +45,7 @@ public class ItemBean {
         this.summary = summary;
     }
 
-   ItemBean(String title, String summary){
+    public ItemBean(String title, String summary){
        this.title = title;
        this.summary = summary;
    }

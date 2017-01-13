@@ -3,7 +3,7 @@ package com.speedata.applicationlock.options;
 import android.content.Context;
 
 import com.speedata.applicationlock.R;
-import com.speedata.applicationlock.options.source.ItemBean;
+import com.speedata.applicationlock.bean.ItemBean;
 
 import java.util.List;
 
