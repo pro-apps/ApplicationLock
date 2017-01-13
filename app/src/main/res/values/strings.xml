@@ -37,4 +37,8 @@
     <string name="set_login_pwd">设置登录密码</string>
     <string name="set_login_pwd_tab">设置登录密码选项</string>
     <string name="if_you_need_show_pwd">如果需要在设置密码框内显示密码</string>
+    <string name="logo">图标</string>
+    <string name="logo_is_show">配置显示图标选项</string>
+    <string name="wallpaper">壁纸</string>
+    <string name="wallpaper_config">配置锁屏壁纸选项</string>
 </resources>

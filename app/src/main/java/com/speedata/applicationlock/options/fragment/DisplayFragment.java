@@ -1,10 +1,15 @@
 package com.speedata.applicationlock.options.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseFragment;
@@ -35,7 +40,7 @@ import com.speedata.applicationlock.options.OptionsActivity;
  * 联系方式:QQ:282921012
  * 功能描述:显示Fragment
  */
-public class DisplayFragment extends BaseFragment {
+public class DisplayFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
 
     public DisplayFragment() {
@@ -51,6 +56,20 @@ public class DisplayFragment extends BaseFragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        TextView mTvTitle = (TextView) view.findViewById(R.id.tv_title_no_checkbox);
+        mTvTitle.setText(R.string.wallpaper);
+        TextView mTvSummary = (TextView) view.findViewById(R.id.tv_summary_no_checkbox);
+        mTvSummary.setText(R.string.wallpaper_config);
+        Switch mSwIsShows = (Switch) view.findViewById(R.id.sw_is_show);
+        mSwIsShows.setOnCheckedChangeListener(this);
+        view.findViewById(R.id.ll_wallpaper).setOnClickListener(this);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         ((OptionsActivity) getActivity()).mToolbar.setTitle(R.string.display);
@@ -60,5 +79,24 @@ public class DisplayFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         ((OptionsActivity) getActivity()).mToolbar.setTitle(R.string.options);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_wallpaper:
+                Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER);
+                Intent chooser = Intent.createChooser(intent, getString(R.string.wallpaper));
+                startActivity(chooser);
+                break;
+
+            default:
+                break;
+        }
     }
 }
