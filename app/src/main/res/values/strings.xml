@@ -34,4 +34,7 @@
     <string name="security">安全</string>
     <string name="programmable_keys">可编程键</string>
     <string name="notification_bar">通知栏</string>
+    <string name="set_login_pwd">设置登录密码</string>
+    <string name="set_login_pwd_tab">设置登录密码选项</string>
+    <string name="if_you_need_show_pwd">如果需要在设置密码框内显示密码</string>
 </resources>

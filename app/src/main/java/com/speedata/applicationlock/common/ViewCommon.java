@@ -39,7 +39,7 @@ public class ViewCommon {
     public static boolean setMenuOptions(MenuItem item, Context context) {
         switch (item.getItemId()) {
             case R.id.action_admin:
-                ToolToast.showPwdDialog(context, R.layout.view_input_pwd_dialog_layout);
+                ToolToast.showPwdDialog(context, R.layout.view_input_pwd_dialog_layout,false);
                 return true;
             case R.id.action_clear:
                 ToolsCommon.clearRecentTask(context);

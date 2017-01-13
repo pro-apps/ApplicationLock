@@ -70,7 +70,7 @@ public class ToolToast {
      * @param context 上下文
      * @param viewId  自定义布局View
      */
-    public static Dialog showPwdDialog(final Context context, int viewId) {
+    public static Dialog showPwdDialog(final Context context, int viewId, boolean isShowNewPwd) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View mView = LayoutInflater.from(context).inflate(viewId, null);
         builder.setView(mView);
@@ -79,6 +79,11 @@ public class ToolToast {
         final Button mBtnModify = (Button) mView.findViewById(R.id.btn_modify_pwd);
         final CheckBox mCheckBox = (CheckBox) mView.findViewById(R.id.cb_is_show);
         final Dialog dialog = builder.show();
+        final boolean isShow = (boolean) SPUtils.get(context, "is_Show_pwd", false, "pwd_file");
+        mPwdNew.setVisibility(isShowNewPwd ? View.VISIBLE : View.GONE);
+        if (isShow)
+            mPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        mCheckBox.setChecked(isShow);
         mBtnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +107,7 @@ public class ToolToast {
                 } else {
                     if (mPwd.getText().toString().equals(SPUtils.get(context, "pwd", "1234", "pwd_file"))) {
                         EventBus.getDefault().post(new AdminTag(true));
-                        MainActivity.isAdmin=true;
+                        MainActivity.isAdmin = true;
                         dialog.dismiss();
                     } else {
                         //密码错误
