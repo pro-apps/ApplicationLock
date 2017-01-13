@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseFragment;
+import com.speedata.applicationlock.common.GlobalParams;
+import com.speedata.applicationlock.common.ToolsCommon;
+import com.speedata.applicationlock.common.utils.SPUtils;
 import com.speedata.applicationlock.options.OptionsActivity;
 
 /**
@@ -66,6 +69,7 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
         mTvSummary.setText(R.string.wallpaper_config);
         Switch mSwIsShows = (Switch) view.findViewById(R.id.sw_is_show);
         mSwIsShows.setOnCheckedChangeListener(this);
+        mSwIsShows.setChecked(ToolsCommon.getIsShowLogo(getActivity()));
         view.findViewById(R.id.ll_wallpaper).setOnClickListener(this);
     }
 
@@ -83,7 +87,11 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+        SPUtils.put(getActivity(), GlobalParams.IS_SHOW_LOGO_KEY, isChecked, GlobalParams.APP_CONFIG);
+        if (isChecked)
+            ((OptionsActivity) getActivity()).mToolbar.setNavigationIcon(null);
+        else
+            ((OptionsActivity) getActivity()).mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
     }
 
     @Override

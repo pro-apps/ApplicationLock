@@ -17,6 +17,7 @@ import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.bean.AppChanged;
 import com.speedata.applicationlock.bean.AppInfo;
 import com.speedata.applicationlock.bean.AppInfo_Table;
+import com.speedata.applicationlock.common.utils.SPUtils;
 import com.speedata.applicationlock.common.utils.ToolToast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -194,7 +195,7 @@ public class ToolsCommon {
      * 结束最近使用程序
      */
     @SuppressWarnings("deprecation")
-    public static void clearRecentTask(Context context) {
+    static void clearRecentTask(Context context) {
         List<String> pkgList = new ArrayList<>();
         pkgList.addAll(getWhitePkgList());
         Method mRemoveTask;
@@ -227,5 +228,15 @@ public class ToolsCommon {
             mPkgList.add(mAppList.get(i).getAppPkg());
         }
         return mPkgList;
+    }
+
+    /**
+     * 是否显示图标
+     *
+     * @param context context
+     * @return 显示
+     */
+    public static boolean getIsShowLogo(Context context) {
+        return (boolean) SPUtils.get(context, GlobalParams.IS_SHOW_LOGO_KEY, false, GlobalParams.APP_CONFIG);
     }
 }

@@ -63,7 +63,6 @@ public class OptionsActivity extends BaseActivity implements
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.options);
-        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
         OptionsAdapter mAdapter = new OptionsAdapter
                 (this, R.layout.view_options_item_layout, Source.getOptionsList());
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_content);
@@ -124,5 +123,7 @@ public class OptionsActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        if (!ToolsCommon.getIsShowLogo(this))
+            mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
     }
 }
