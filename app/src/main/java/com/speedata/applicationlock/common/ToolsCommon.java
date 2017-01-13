@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.speedata.applicationlock.R;
@@ -69,6 +73,20 @@ public class ToolsCommon {
             ToolToast.toastShort(context.getString(R.string.app_error));
         }
 
+    }
+
+    /**
+     * 开启Fragment
+     *
+     * @param context  context
+     * @param fragment 目标fragment
+     */
+    public static void startFragment(AppCompatActivity context, Fragment fragment) {
+        FragmentManager manager = context.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_options, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     /**

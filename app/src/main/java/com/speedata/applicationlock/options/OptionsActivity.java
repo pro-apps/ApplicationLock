@@ -12,6 +12,11 @@ import android.widget.RelativeLayout;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.base.BaseActivity;
+import com.speedata.applicationlock.common.ToolsCommon;
+import com.speedata.applicationlock.options.fragment.DisplayFragment;
+import com.speedata.applicationlock.options.fragment.NotificationFragment;
+import com.speedata.applicationlock.options.fragment.ProgrammableFragment;
+import com.speedata.applicationlock.options.fragment.SecurityFragment;
 import com.speedata.applicationlock.options.source.Source;
 
 import xyz.reginer.baseadapter.CommonRvAdapter;
@@ -46,6 +51,7 @@ public class OptionsActivity extends BaseActivity implements
         CommonRvAdapter.OnItemClickListener, View.OnClickListener {
 
     private CheckBox mCheckBox;
+    public Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class OptionsActivity extends BaseActivity implements
     }
 
     private void initView() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.options);
         mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
         OptionsAdapter mAdapter = new OptionsAdapter
@@ -78,7 +84,21 @@ public class OptionsActivity extends BaseActivity implements
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder viewHolder, View view, int position) {
+        switch (position) {
+            case 0:
+                ToolsCommon.startFragment(OptionsActivity.this, new NotificationFragment());
+                break;
+            case 1:
+                ToolsCommon.startFragment(OptionsActivity.this, new DisplayFragment());
+                break;
+            case 2:
+                ToolsCommon.startFragment(OptionsActivity.this, new SecurityFragment());
+                break;
+            case 3:
+                ToolsCommon.startFragment(OptionsActivity.this, new ProgrammableFragment());
+                break;
 
+        }
     }
 
     @Override
@@ -94,9 +114,15 @@ public class OptionsActivity extends BaseActivity implements
 
     /**
      * 允许usb调试
+     *
      * @param checked checked
      */
     private void allow(boolean checked) {
         Settings.Global.putInt(getContentResolver(), Settings.Global.ADB_ENABLED, checked ? 1 : 0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
