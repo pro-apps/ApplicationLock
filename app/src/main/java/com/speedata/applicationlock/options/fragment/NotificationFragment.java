@@ -3,14 +3,17 @@ package com.speedata.applicationlock.options.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.speedata.applicationlock.R;
+import com.speedata.applicationlock.base.BaseFragment;
+import com.speedata.applicationlock.common.GlobalParams;
+import com.speedata.applicationlock.common.utils.SPUtils;
 import com.speedata.applicationlock.options.OptionsActivity;
 
 /**
@@ -38,7 +41,7 @@ import com.speedata.applicationlock.options.OptionsActivity;
  * 联系方式:QQ:282921012
  * 功能描述:通知栏配置Fragment
  */
-public class NotificationFragment extends Fragment implements View.OnClickListener {
+public class NotificationFragment extends BaseFragment implements View.OnClickListener {
 
     private CheckBox mShowBox;
     private CheckBox mEnableBox;
@@ -66,7 +69,8 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         mShowNotificationTitle.setText(R.string.show_notification);
         mShowNotificationSummary.setText(R.string.to_show_notification);
         mShowBox.setVisibility(View.VISIBLE);
-
+        mShowBox.setChecked((boolean) SPUtils.get(mContext, GlobalParams.IS_SHOW_NOTIFICATION_KEY,
+                false, GlobalParams.APP_CONFIG));
 
         view.findViewById(R.id.rl_show_notification).setOnClickListener(this);
         view.findViewById(R.id.rl_enable_notification).setOnClickListener(this);
@@ -103,5 +107,15 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     private void showNotification() {
         mShowBox.setChecked(!mShowBox.isChecked());
+        if (mShowBox.isChecked())
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        else
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        SPUtils.put(mContext, GlobalParams.IS_SHOW_NOTIFICATION_KEY, mShowBox.isChecked(),
+                GlobalParams.APP_CONFIG);
+
     }
 }

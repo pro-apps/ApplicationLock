@@ -30,5 +30,9 @@ public class GlobalParams {
 
     public static final String IS_SHOW_LOGO_KEY ="is_show_logo";
 
+    public static final String IS_SHOW_NOTIFICATION_KEY ="is_show_notification";
+
+
+
 
 }
