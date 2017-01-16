@@ -41,4 +41,16 @@
     <string name="logo_is_show">配置显示图标选项</string>
     <string name="wallpaper">壁纸</string>
     <string name="wallpaper_config">配置锁屏壁纸选项</string>
+    <string name="show_notification">显示通知栏</string>
+    <string name="to_show_notification">可以显示通知栏</string>
+    <string name="enable_show_notification">使通知栏可用</string>
+    <string name="enable_notification">通知栏</string>
+    <string name="volume_up">调高音量</string>
+    <string name="to_lock_volume_up">锁定硬件音量上键</string>
+    <string name="volume_down">调低音量</string>
+    <string name="to_lock_volume_down">锁定硬件音量下键</string>
+    <string name="left_function">左功能键</string>
+    <string name="to_lock_left_function">锁定硬件左功能键</string>
+    <string name="right_function">右功能键</string>
+    <string name="to_lock_right_function">锁定硬件右功能键</string>
 </resources>
