@@ -169,6 +169,7 @@ public class ToolsCommon {
         }
         List<AppInfo> mDbAppList = new ArrayList<>();
         mDbAppList.addAll(SQLite.select().from(AppInfo.class).queryList());
+
         List<String> mDbActList = new ArrayList<>();
         for (int i = 0; i < mDbAppList.size(); i++) {
             mDbActList.add(mDbAppList.get(i).getActName());

@@ -2,6 +2,7 @@ package com.speedata.applicationlock.base;
 
 import android.app.Application;
 
+import com.bugtags.library.Bugtags;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.speedata.applicationlock.common.GlobalParams;
@@ -47,7 +48,7 @@ public class App extends Application {
             SPUtils.put(this, GlobalParams.IS_SHOW_NOTIFICATION_KEY, true,
                     GlobalParams.APP_CONFIG);
 
-
+        Bugtags.start("2f7c9262e183ae3331411cf1408d1366", this, Bugtags.BTGInvocationEventNone);
     }
 
 
