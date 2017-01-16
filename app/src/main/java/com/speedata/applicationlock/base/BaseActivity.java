@@ -3,6 +3,7 @@ package com.speedata.applicationlock.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import com.speedata.applicationlock.common.GlobalParams;
@@ -36,6 +37,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -44,9 +46,22 @@ public class BaseActivity extends AppCompatActivity {
         boolean isShowNotification = (boolean) SPUtils.get
                 (this, GlobalParams.IS_SHOW_NOTIFICATION_KEY, false, GlobalParams.APP_CONFIG);
         if (isShowNotification)
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        else
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        else
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP &&
+                (boolean) SPUtils.get(this, GlobalParams.VOLUME_UP, false, GlobalParams.APP_CONFIG))
+            return true;
+        else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN &&
+                (boolean) SPUtils.get(this, GlobalParams.VOLUME_UP, false, GlobalParams.APP_CONFIG))
+            return true;
+
+        return super.onKeyDown(keyCode, event);
     }
 }

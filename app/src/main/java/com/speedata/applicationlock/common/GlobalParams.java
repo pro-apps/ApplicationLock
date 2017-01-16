@@ -32,6 +32,14 @@ public class GlobalParams {
 
     public static final String IS_SHOW_NOTIFICATION_KEY ="is_show_notification";
 
+    public static final String VOLUME_UP ="volume_up";
+
+    public static final String VOLUME_DOWN ="volume_down";
+
+    public static final String LEFT_FUNCTION ="left_function";
+
+    public static final String RIGHT_FUNCTION ="right_function";
+
 
 
 

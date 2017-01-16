@@ -1,6 +1,7 @@
 package com.speedata.applicationlock.options.fragment;
 
 
+import android.app.StatusBarManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -101,19 +102,24 @@ public class NotificationFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    @SuppressWarnings("WrongConstant")
     private void enableNotification() {
+
         mEnableBox.setChecked(!mEnableBox.isChecked());
+        StatusBarManager mStatusBarManager = (StatusBarManager) mContext.getSystemService("statusbar");
+        if (mEnableBox.isChecked())
+            mStatusBarManager.disable(StatusBarManager.DISABLE_NONE);
+        else
+            mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND);
     }
 
     private void showNotification() {
         mShowBox.setChecked(!mShowBox.isChecked());
         if (mShowBox.isChecked())
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        else
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        else
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
         SPUtils.put(mContext, GlobalParams.IS_SHOW_NOTIFICATION_KEY, mShowBox.isChecked(),
                 GlobalParams.APP_CONFIG);
 

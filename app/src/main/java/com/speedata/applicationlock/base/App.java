@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.speedata.applicationlock.common.GlobalParams;
+import com.speedata.applicationlock.common.utils.SPUtils;
 
 /**
  * ----------Dragon be here!----------/
@@ -31,6 +33,7 @@ import com.raizlabs.android.dbflow.config.FlowManager;
  */
 public class App extends Application {
     private static App mInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -40,9 +43,15 @@ public class App extends Application {
     private void init() {
         mInstance = this;
         FlowManager.init(new FlowConfig.Builder(this).build());
+        if (!SPUtils.contains(this, GlobalParams.IS_SHOW_NOTIFICATION_KEY, GlobalParams.APP_CONFIG))
+            SPUtils.put(this, GlobalParams.IS_SHOW_NOTIFICATION_KEY, true,
+                    GlobalParams.APP_CONFIG);
+
+
     }
 
-    public static App getInstance(){
+
+    public static App getInstance() {
         return mInstance;
     }
 }
