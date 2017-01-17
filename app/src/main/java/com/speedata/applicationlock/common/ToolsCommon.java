@@ -145,7 +145,7 @@ public class ToolsCommon {
             List<ResolveInfo> mAppList = context.getPackageManager().queryIntentActivities(mIntent, 0);
             AppInfo mAppInfo = new AppInfo(mAppList.get(mAppList.size() - 1).activityInfo.name,
                     mAppList.get(mAppList.size() - 1).activityInfo.packageName,
-                    mAppList.get(mAppList.size() - 1).activityInfo.loadLabel(context.getPackageManager()).toString(), false);
+                    mAppList.get(mAppList.size() - 1).activityInfo.loadLabel(context.getPackageManager()).toString(), true);
             mAppInfo.save();
         } else {
             SQLite.delete(AppInfo.class).where(AppInfo_Table.appPkg.is(pkgName)).async().execute();

@@ -3,10 +3,8 @@ package com.speedata.applicationlock.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.WindowManager;
 
-import com.bugtags.library.Bugtags;
 import com.speedata.applicationlock.common.GlobalParams;
 import com.speedata.applicationlock.common.utils.SPUtils;
 
@@ -45,7 +43,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Bugtags.onResume(this);
         boolean isShowNotification = (boolean) SPUtils.get
                 (this, GlobalParams.IS_SHOW_NOTIFICATION_KEY, false, GlobalParams.APP_CONFIG);
         if (isShowNotification)
@@ -56,17 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bugtags.onPause(this);
-    }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        Bugtags.onDispatchTouchEvent(this, event);
-        return super.dispatchTouchEvent(event);
-    }
 
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {

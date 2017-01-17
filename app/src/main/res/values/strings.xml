@@ -53,4 +53,5 @@
     <string name="to_lock_left_function">锁定硬件左功能键</string>
     <string name="right_function">右功能键</string>
     <string name="to_lock_right_function">锁定硬件右功能键</string>
+    <string name="admin_mode_start">当前已处于管理员模式</string>
 </resources>

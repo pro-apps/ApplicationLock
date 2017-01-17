@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     private List<AppInfo> mAllAppList;
     private AppsAdapter mAdapter;
     private ReselectSpinner mSourceSpinner;
+    private boolean isRequestReload;
     public static boolean isAdmin = false;
 
 
@@ -127,20 +128,33 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getShowSpinner(AdminTag adminTag) {
-//        if (adminTag.isAdmin()) {
+        if (adminTag.isAdmin()) {
 //            mSourceSpinner.setVisibility(View.VISIBLE);
-//        }
+            ToolToast.toastShort(getString(R.string.admin_mode_start));
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getAppChanged(AppChanged appChanged) {
         mAllAppList.clear();
         if (appChanged.isHide()) {
-            mAllAppList.addAll(DbCommon.queryAppList(false));
+            isRequestReload = true;
         } else {
             mAllAppList.addAll(ToolsCommon.getAppChangedList(this, appChanged.isAdd(), appChanged.getPackageName()));
         }
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isRequestReload) {
+            mAllAppList.clear();
+            mAllAppList.addAll(DbCommon.queryAppList(false));
+            mAdapter.notifyDataSetChanged();
+            isRequestReload = false;
+        }
+
     }
 
     @Override
@@ -178,6 +192,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
 
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-def dbFlow_version = "4.0.0-beta3"
+def dbFlow_version = "4.0.0-beta5"
 
-apply plugin: 'com.bugtags.library.plugin'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -25,14 +24,6 @@ android {
         }
     }
 }
-bugtags {
-    appKey "2f7c9262e183ae3331411cf1408d1366"  //这里是你的 appKey
-    appSecret "ed57aa74de340906acfdf1028bcd58a6"    //这里是你的 appSecret，管理员在设置页可以查看
-    mappingUploadEnabled true
-
-    //网络跟踪功能配置(企业版)
-    trackingNetworkEnabled true
-}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -49,6 +40,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.android.support:support-v4:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.bugtags.library:bugtags-lib:latest.integration'
     compile files('src/main/libs/StatusManager.jar')
 }
