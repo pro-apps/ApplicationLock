@@ -40,6 +40,13 @@ public class GlobalParams {
 
     public static final String RIGHT_FUNCTION ="right_function";
 
+    public static final String ENABLE_STATUS ="enable_status";
+
+    public static final String STATUS_ENABLE_BROADCAST ="persist.sys.enableupmenu";
+
+    public static final String STATUS_ENABLE_BROADCAST_KEY ="enableupmenu";
+
+
 
 
 

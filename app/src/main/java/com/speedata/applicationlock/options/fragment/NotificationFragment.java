@@ -1,7 +1,7 @@
 package com.speedata.applicationlock.options.fragment;
 
 
-import android.app.StatusBarManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -72,7 +72,8 @@ public class NotificationFragment extends BaseFragment implements View.OnClickLi
         mShowBox.setVisibility(View.VISIBLE);
         mShowBox.setChecked((boolean) SPUtils.get(mContext, GlobalParams.IS_SHOW_NOTIFICATION_KEY,
                 false, GlobalParams.APP_CONFIG));
-
+        mEnableBox.setChecked((boolean) SPUtils.get(mContext, GlobalParams.ENABLE_STATUS,
+                false, GlobalParams.APP_CONFIG));
         view.findViewById(R.id.rl_show_notification).setOnClickListener(this);
         view.findViewById(R.id.rl_enable_notification).setOnClickListener(this);
     }
@@ -102,15 +103,18 @@ public class NotificationFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-    @SuppressWarnings("WrongConstant")
     private void enableNotification() {
-
         mEnableBox.setChecked(!mEnableBox.isChecked());
-        StatusBarManager mStatusBarManager = (StatusBarManager) mContext.getSystemService("statusbar");
-        if (mEnableBox.isChecked())
-            mStatusBarManager.disable(StatusBarManager.DISABLE_NONE);
-        else
-            mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND);
+        Intent intent = new Intent(GlobalParams.STATUS_ENABLE_BROADCAST);
+        if (mEnableBox.isChecked()) {
+            intent.putExtra(GlobalParams.STATUS_ENABLE_BROADCAST_KEY, true);
+            SPUtils.put(mContext, GlobalParams.ENABLE_STATUS, true, GlobalParams.APP_CONFIG);
+        } else {
+            intent.putExtra(GlobalParams.STATUS_ENABLE_BROADCAST_KEY, false);
+            SPUtils.put(mContext, GlobalParams.ENABLE_STATUS, false, GlobalParams.APP_CONFIG);
+        }
+
+        mContext.sendBroadcast(intent);
     }
 
     private void showNotification() {

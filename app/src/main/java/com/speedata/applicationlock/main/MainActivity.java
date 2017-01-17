@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     }
 
     private void loadApps() {
-        if (DbCommon.queryAppList(false).isEmpty()) {
+        if (DbCommon.queryAppList(false).isEmpty()&&DbCommon.queryAppList(true).isEmpty()) {
             mAllAppList.addAll(ToolsCommon.getAllAppList(this));
             DbCommon.saveAppList(mAllAppList);
         } else {
@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getShowSpinner(AdminTag adminTag) {
         if (adminTag.isAdmin()) {
-//            mSourceSpinner.setVisibility(View.VISIBLE);
+            mSourceSpinner.setVisibility(View.VISIBLE);
             ToolToast.toastShort(getString(R.string.admin_mode_start));
         }
     }
