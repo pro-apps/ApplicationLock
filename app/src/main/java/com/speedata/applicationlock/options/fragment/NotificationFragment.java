@@ -128,4 +128,6 @@ public class NotificationFragment extends BaseFragment implements View.OnClickLi
                 GlobalParams.APP_CONFIG);
 
     }
+
+
 }
