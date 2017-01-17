@@ -177,6 +177,7 @@ public class ToolsCommon {
 
         for (int i = 0; i < mAllAppList.size(); i++) {
             if (!mDbActList.contains(mAllAppActList.get(i))) {
+                mAllAppList.get(i).setHide(true);
                 mAllAppList.get(i).save();
                 isRequestReload = true;
             }

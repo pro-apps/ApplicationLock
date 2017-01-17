@@ -127,9 +127,9 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getShowSpinner(AdminTag adminTag) {
-        if (adminTag.isAdmin()) {
-            mSourceSpinner.setVisibility(View.VISIBLE);
-        }
+//        if (adminTag.isAdmin()) {
+//            mSourceSpinner.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
