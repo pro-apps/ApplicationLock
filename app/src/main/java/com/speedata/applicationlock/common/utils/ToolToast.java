@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.speedata.applicationlock.R;
@@ -149,6 +150,36 @@ public class ToolToast {
         builder.setView(mView);
         final Dialog dialog = builder.show();
         mView.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+    }
+
+    /**
+     * 显示确认取消对话框
+     *
+     * @param context        context
+     * @param viewId         页面
+     * @param title          title
+     * @param msg            msg
+     * @param mClickListener 点击
+     * @return dialog
+     */
+    public static Dialog showOkCancelDialog(final Context context, int viewId, String title,
+                                            String msg, View.OnClickListener mClickListener) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View mView = LayoutInflater.from(context).inflate(viewId, null);
+        TextView mTitle = (TextView) mView.findViewById(R.id.tv_dialog_title);
+        TextView mMsg = (TextView) mView.findViewById(R.id.tv_dialog_message);
+        mTitle.setText(title);
+        mMsg.setText(msg);
+        builder.setView(mView);
+        final Dialog dialog = builder.show();
+        mView.findViewById(R.id.btn_ok).setOnClickListener(mClickListener);
+        mView.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

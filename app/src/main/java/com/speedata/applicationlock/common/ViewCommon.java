@@ -1,8 +1,11 @@
 package com.speedata.applicationlock.common;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.common.utils.ToolToast;
@@ -36,10 +39,10 @@ import com.speedata.applicationlock.options.OptionsActivity;
  */
 public class ViewCommon {
 
-    public static boolean setMenuOptions(MenuItem item, Context context) {
+    public static boolean setMenuOptions(MenuItem item, Context context, View.OnClickListener mOnclickListener) {
         switch (item.getItemId()) {
             case R.id.action_admin:
-                ToolToast.showPwdDialog(context, R.layout.view_input_pwd_dialog_layout,false);
+                ToolToast.showPwdDialog(context, R.layout.view_input_pwd_dialog_layout, false);
                 return true;
             case R.id.action_clear:
                 ToolsCommon.clearRecentTask(context);
@@ -66,9 +69,23 @@ public class ViewCommon {
                 return true;
             case R.id.action_launch_settings:
                 //action_options
+                try {
+                    Intent mIntent = new Intent("/");
+                    ComponentName componentName = new ComponentName("com.android.settings",
+                            "com.android.settings.Settings");
+                    mIntent.setComponent(componentName);
+                    mIntent.setAction("android.intent.action.VIEW");
+                    context.startActivity(mIntent);
+                } catch (ActivityNotFoundException e) {
+                    ToolToast.toastShort(context.getString(R.string.no_setting));
+                }
+
                 return true;
             case R.id.action_reset_to_default:
                 //action_reset_to_default
+                ToolToast.showOkCancelDialog(context, R.layout.view_dialog_layout,
+                        context.getString(R.string.reset_to_default), context.
+                                getString(R.string.sure_reset), mOnclickListener);
                 return true;
             case R.id.action_exit:
                 //action_exit

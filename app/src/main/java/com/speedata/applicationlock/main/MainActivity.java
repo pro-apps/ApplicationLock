@@ -1,5 +1,7 @@
 package com.speedata.applicationlock.main;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +78,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
     }
 
     private void loadApps() {
-        if (DbCommon.queryAppList(false).isEmpty()&&DbCommon.queryAppList(true).isEmpty()) {
+        if (DbCommon.queryAppList(false).isEmpty() && DbCommon.queryAppList(true).isEmpty()) {
             mAllAppList.addAll(ToolsCommon.getAllAppList(this));
             DbCommon.saveAppList(mAllAppList);
         } else {
@@ -122,7 +124,7 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ViewCommon.setMenuOptions(item, this);
+        ViewCommon.setMenuOptions(item, this, mOnClick);
         return super.onOptionsItemSelected(item);
     }
 
@@ -196,5 +198,27 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private View.OnClickListener mOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_ok:
+                    clearApplicationUserData();
+                    break;
+
+            }
+        }
+    };
+
+    private void clearApplicationUserData() {
+        ToolToast.toastShort("ok");
+        ActivityManager activityManager = (ActivityManager) getSystemService
+                (Context.ACTIVITY_SERVICE);
+        if (activityManager.clearApplicationUserData())
+            ToolToast.toastShort("success");
+        else
+            ToolToast.toastShort("filed");
     }
 }
