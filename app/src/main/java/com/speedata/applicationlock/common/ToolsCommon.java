@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.raizlabs.android.dbflow.sql.language.SQLite.delete;
+
 /**
  * ----------Dragon be here!----------/
  * 　　　┏┓　　　┏┓
@@ -148,7 +150,7 @@ public class ToolsCommon {
                     mAppList.get(mAppList.size() - 1).activityInfo.loadLabel(context.getPackageManager()).toString(), true);
             mAppInfo.save();
         } else {
-            SQLite.delete(AppInfo.class).where(AppInfo_Table.appPkg.is(pkgName)).async().execute();
+            delete(AppInfo.class).where(AppInfo_Table.appPkg.is(pkgName)).async().execute();
         }
         mAllAppList.addAll(DbCommon.queryAppList(false));
         return mAllAppList;
@@ -185,7 +187,7 @@ public class ToolsCommon {
         }
         for (int i = 0; i < mDbAppList.size(); i++) {
             if (!mAllAppActList.contains(mDbActList.get(i))) {
-                SQLite.delete().from(AppInfo.class).where(AppInfo_Table.actName.is(mDbAppList.get(i).getActName())).async().execute();
+                delete().from(AppInfo.class).where(AppInfo_Table.actName.is(mDbAppList.get(i).getActName())).async().execute();
                 isRequestReload = true;
             }
         }
@@ -240,5 +242,16 @@ public class ToolsCommon {
      */
     public static boolean getIsShowLogo(Context context) {
         return (boolean) SPUtils.get(context, GlobalParams.IS_SHOW_LOGO_KEY, false, GlobalParams.APP_CONFIG);
+    }
+
+    /**
+     * 清除数据
+     *
+     * @param context context
+     */
+    public static void clearData(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService
+                (Context.ACTIVITY_SERVICE);
+        activityManager.clearApplicationUserData();
     }
 }

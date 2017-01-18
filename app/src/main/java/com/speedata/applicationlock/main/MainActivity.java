@@ -1,7 +1,5 @@
 package com.speedata.applicationlock.main;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -205,20 +203,11 @@ public class MainActivity extends BaseActivity implements CommonRvAdapter.OnItem
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_ok:
-                    clearApplicationUserData();
+                    ToolsCommon.clearData(MainActivity.this);
                     break;
 
             }
         }
     };
 
-    private void clearApplicationUserData() {
-        ToolToast.toastShort("ok");
-        ActivityManager activityManager = (ActivityManager) getSystemService
-                (Context.ACTIVITY_SERVICE);
-        if (activityManager.clearApplicationUserData())
-            ToolToast.toastShort("success");
-        else
-            ToolToast.toastShort("filed");
-    }
 }
