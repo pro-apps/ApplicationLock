@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.speedata.applicationlock.R;
 import com.speedata.applicationlock.common.utils.ToolToast;
+import com.speedata.applicationlock.export.ExportActivity;
+import com.speedata.applicationlock.imp.ImportActivity;
 import com.speedata.applicationlock.main.MainActivity;
 import com.speedata.applicationlock.manager.activity.ManagerActivity;
 import com.speedata.applicationlock.options.OptionsActivity;
@@ -59,9 +61,11 @@ public class ViewCommon {
                 return true;
             case R.id.action_import:
                 //action_import
+                context.startActivity(new Intent(context, ImportActivity.class));
                 return true;
             case R.id.action_export:
                 //action_export
+                context.startActivity(new Intent(context, ExportActivity.class));
                 return true;
             case R.id.action_options:
                 //action_options

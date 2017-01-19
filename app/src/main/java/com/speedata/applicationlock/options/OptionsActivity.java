@@ -123,7 +123,7 @@ public class OptionsActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (!ToolsCommon.getIsShowLogo(this))
+        if (ToolsCommon.getIsShowLogo(this))
             mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
     }
 }

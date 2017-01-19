@@ -89,9 +89,9 @@ public class DisplayFragment extends BaseFragment implements CompoundButton.OnCh
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         SPUtils.put(getActivity(), GlobalParams.IS_SHOW_LOGO_KEY, isChecked, GlobalParams.APP_CONFIG);
         if (isChecked)
-            ((OptionsActivity) getActivity()).mToolbar.setNavigationIcon(null);
-        else
             ((OptionsActivity) getActivity()).mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        else
+            ((OptionsActivity) getActivity()).mToolbar.setNavigationIcon(null);
     }
 
     @Override

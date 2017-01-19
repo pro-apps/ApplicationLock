@@ -241,7 +241,7 @@ public class ToolsCommon {
      * @return 显示
      */
     public static boolean getIsShowLogo(Context context) {
-        return (boolean) SPUtils.get(context, GlobalParams.IS_SHOW_LOGO_KEY, false, GlobalParams.APP_CONFIG);
+        return (boolean) SPUtils.get(context, GlobalParams.IS_SHOW_LOGO_KEY, true, GlobalParams.APP_CONFIG);
     }
 
     /**
