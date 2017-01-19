@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/file_browse_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- path -->
+    <LinearLayout
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+        <RelativeLayout
+            android:id="@+id/current_path_pane"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/path_pane_bg"
+            android:gravity="center_vertical"
+            >
+
+
+            <TextView
+                android:id="@+id/current_path_view"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="start"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry"/>
+
+            <ImageView
+                android:id="@+id/path_pane_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@null"
+                android:paddingTop="@dimen/dp10"
+                android:src="@mipmap/arrow_down"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/path_pane_up_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginStart="5dp"
+            android:contentDescription="@null"
+            android:src="@drawable/path_up_level"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/file_path_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/navigation_bar"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/dp10"
+        android:drawableTop="@mipmap/empty_icon"
+        android:gravity="center_horizontal"
+        android:text="@string/no_file"
+        android:textSize="@dimen/sp15"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

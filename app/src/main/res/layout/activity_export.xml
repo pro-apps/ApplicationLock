@@ -14,4 +14,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    <include
+        layout="@layout/view_export_header_layout"/>
+
+    <include
+        layout="@layout/view_file_explorer_layout"/>
 </LinearLayout>

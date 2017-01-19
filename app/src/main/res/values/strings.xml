@@ -56,4 +56,7 @@
     <string name="admin_mode_start">当前已处于管理员模式</string>
     <string name="no_setting">无系统设置</string>
     <string name="sure_reset">是否确认将AppLock恢复至出厂设置</string>
+    <string name="location">路径:</string>
+    <string name="name">文件名:</string>
+    <string name="no_file">没有文件</string>
 </resources>
